@@ -1,0 +1,6 @@
+
+mutation {
+  post(url: "www.prisma.io", description: "Next-generation Node.js and TypeScript ORM") {
+    id
+  }
+}

@@ -1,5 +1,6 @@
-import { extendType, nonNull, objectType, stringArg } from "nexus";   
-import { NexusGenObjects } from "../../nexus-typegen";  
+import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { createLink, getLinks } from "../services/linkService";
+import { validateLinkInput } from "../services/linkValidationService";
 
 export const Link = objectType({
     name: "Link", // 1 
@@ -10,19 +11,6 @@ export const Link = objectType({
     },
 });
 
-let links: NexusGenObjects["Link"][]= [   // 1
-    {
-        id: 1,
-        url: "www.howtographql.com",
-        description: "Fullstack tutorial for GraphQL",
-    },
-    {
-        id: 2,
-        url: "graphql.org",
-        description: "GraphQL official website",
-    },
-];
-
 
 export const LinkQuery = extendType({  // 2
     type: "Query",
@@ -30,7 +18,7 @@ export const LinkQuery = extendType({  // 2
         t.nonNull.list.nonNull.field("feed", {   // 3
             type: "Link",
             resolve(parent, args, context, info) {    // 4
-                return links;
+                return getLinks();
             },
         });
     },
@@ -45,18 +33,15 @@ export const LinkMutation = extendType({  // 1
                 description: nonNull(stringArg()),
                 url: nonNull(stringArg()),
             },
+
+            validate: async (root, args) => {
+                await validateLinkInput(args);
+            },
             
-            resolve(parent, args, context) {    
+            resolve(parent, args, context) {
                 const { description, url } = args;  // 4
-                
-                let idCount = links.length + 1;  // 5
-                const link = {
-                    id: idCount,
-                    description: description,
-                    url: url,
-                };
-                links.push(link);
-                return link;
+
+                return createLink(description, url);
             },
         });
     },
