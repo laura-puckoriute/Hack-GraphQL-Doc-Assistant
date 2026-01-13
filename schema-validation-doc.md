@@ -11,7 +11,7 @@
 | field | data type | validations |
 | --- | --- | --- |
 | description | String! | Required; length between 5 and 255 characters |
-| url | String! | Required; must be a valid URL format |
+| url | String! | Required; must be a valid URL format; length under 100 characters |
 
 ## Query
 | field | data type | validations |
