@@ -3,33 +3,33 @@ import { createLink, getLinks } from "../services/linkService";
 import { validateLinkInput } from "../services/linkValidationService";
 
 export const Link = objectType({
-    name: "Link", // 1 
-    definition(t) {  // 2
-        t.nonNull.int("id"); // 3 
-        t.nonNull.string("description"); // 4
-        t.nonNull.string("url"); // 5 
+    name: "Link",
+    definition(t) { 
+        t.nonNull.int("id"); 
+        t.nonNull.string("description");
+        t.nonNull.string("url");
     },
 });
 
 
-export const LinkQuery = extendType({  // 2
+export const LinkQuery = extendType({
     type: "Query",
     definition(t) {
-        t.nonNull.list.nonNull.field("feed", {   // 3
+        t.nonNull.list.nonNull.field("feed", {
             type: "Link",
-            resolve(parent, args, context, info) {    // 4
+            resolve(parent, args, context, info) {
                 return getLinks();
             },
         });
     },
 });
 
-export const LinkMutation = extendType({  // 1
+export const LinkMutation = extendType({
     type: "Mutation",    
     definition(t) {
-        t.nonNull.field("post", {  // 2
+        t.nonNull.field("post", {
             type: "Link",  
-            args: {   // 3
+            args: {
                 description: nonNull(stringArg()),
                 url: nonNull(stringArg()),
             },
