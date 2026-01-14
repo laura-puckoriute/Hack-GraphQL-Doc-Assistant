@@ -34,6 +34,7 @@ Final check:
 2. Highlight any remaining inconsistencies and propose final adjustments.
 
 Shared guidance:
+• When asking the user to confirm changes, always provide a numbered list for each field validation you plan to make changes to.
 • Ensure all generated code and documentation follow existing conventions.
 • Always highlight inconsistent validation patterns and ask which style to follow before editing.
 • Incorporate any user clarifications into both documentation and code updates.

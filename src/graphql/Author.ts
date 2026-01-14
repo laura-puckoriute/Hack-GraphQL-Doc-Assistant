@@ -1,10 +1,11 @@
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 import { getAuthors, createAuthor } from "../services/authorService";
+import { validateAuthorInput, AuthorInput } from "../services/authorValidationService";
 
 export const Author = objectType({
     name: "Author",
     definition(t) {
-        t.nonNull.int("i");
+        t.nonNull.int("id");
         t.nonNull.string("name");
         t.nonNull.string("email");
         t.nonNull.field("link", { type: "Link" });
@@ -33,7 +34,10 @@ export const AuthorMutation = extendType({
                 name: nonNull(stringArg()),
                 email: nonNull(stringArg()),
             },
-            resolve(parent, args, context) {
+            validate: async (root: any, args: AuthorInput) => {
+                await validateAuthorInput(args);
+            },
+            resolve(parent, args: AuthorInput, context) {
                 const { name, email } = args;
                 // Create a default link for the author
                 const defaultLink = {

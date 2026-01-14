@@ -37,11 +37,11 @@ export const LinkMutation = extendType({
 
             validate: async (root: any, args: LinkInput) => {
                 await validateLinkInput(args);
+                exists(args.url);
             },
-            
+
             resolve(parent, args: LinkInput, context) {
-                const { description, url } = args;  // 4
-                exists(url);
+                const { description, url } = args;
                 return createLink(description, url);
             },
         });

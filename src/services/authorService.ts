@@ -41,7 +41,7 @@ export function createAuthor(
     link: NexusGenObjects["Link"]
 ): NexusGenObjects["Author"] {
     const newAuthor: NexusGenObjects["Author"] = {
-        i: authors.length + 1,
+        id: authors.length + 1,
         name,
         email,
         link,
