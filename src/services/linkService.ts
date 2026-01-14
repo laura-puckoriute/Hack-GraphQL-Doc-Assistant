@@ -1,3 +1,4 @@
+import { GraphQLError } from "graphql";
 import { NexusGenObjects } from "../../nexus-typegen";
 
 const links: NexusGenObjects["Link"][] = [
@@ -28,4 +29,8 @@ export function createLink(description: string, url: string): NexusGenObjects["L
 
     links.push(link);
     return link;
+}
+
+export function exists(url: string){
+    if(links.some(link => link.url === url)) throw new GraphQLError("URL already exists.");
 }

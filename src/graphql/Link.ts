@@ -1,5 +1,5 @@
 import { extendType, nonNull, objectType, stringArg } from "nexus";
-import { createLink, getLinks } from "../services/linkService";
+import { createLink, exists, getLinks } from "../services/linkService";
 import { validateLinkInput } from "../services/linkValidationService";
 
 export const Link = objectType({
@@ -40,7 +40,7 @@ export const LinkMutation = extendType({
             
             resolve(parent, args, context) {
                 const { description, url } = args;  // 4
-
+                exists(url);
                 return createLink(description, url);
             },
         });
