@@ -28,9 +28,17 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Author: { // root type
+    email: string; // String!
+    i: number; // Int!
+    link: NexusGenRootTypes['Link']; // Link!
+    name: string; // String!
+  }
   Link: { // root type
+    dateCreated: number; // Float!
     description: string; // String!
     id: number; // Int!
+    timeCreated: number; // Float!
     url: string; // String!
   }
   Mutation: {};
@@ -48,29 +56,47 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Author: { // field return type
+    email: string; // String!
+    i: number; // Int!
+    link: NexusGenRootTypes['Link']; // Link!
+    name: string; // String!
+  }
   Link: { // field return type
+    dateCreated: number; // Float!
     description: string; // String!
     id: number; // Int!
+    timeCreated: number; // Float!
     url: string; // String!
   }
   Mutation: { // field return type
     post: NexusGenRootTypes['Link']; // Link!
   }
   Query: { // field return type
+    authors: NexusGenRootTypes['Author'][]; // [Author!]!
     feed: NexusGenRootTypes['Link'][]; // [Link!]!
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Author: { // field return type name
+    email: 'String'
+    i: 'Int'
+    link: 'Link'
+    name: 'String'
+  }
   Link: { // field return type name
+    dateCreated: 'Float'
     description: 'String'
     id: 'Int'
+    timeCreated: 'Float'
     url: 'String'
   }
   Mutation: { // field return type name
     post: 'Link'
   }
   Query: { // field return type name
+    authors: 'Author'
     feed: 'Link'
   }
 }

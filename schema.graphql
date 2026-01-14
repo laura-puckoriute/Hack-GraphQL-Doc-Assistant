@@ -2,9 +2,18 @@
 ### Do not make changes to this file directly
 
 
+type Author {
+  email: String!
+  i: Int!
+  link: Link!
+  name: String!
+}
+
 type Link {
+  dateCreated: Float!
   description: String!
   id: Int!
+  timeCreated: Float!
   url: String!
 }
 
@@ -13,5 +22,6 @@ type Mutation {
 }
 
 type Query {
+  authors: [Author!]!
   feed: [Link!]!
 }

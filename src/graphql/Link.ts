@@ -1,6 +1,6 @@
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 import { createLink, getLinks } from "../services/linkService";
-import { validateLinkInput } from "../services/linkValidationService";
+import { validateLinkInput, LinkInput } from "../services/linkValidationService";
 
 export const Link = objectType({
     name: "Link",
@@ -8,9 +8,10 @@ export const Link = objectType({
         t.nonNull.int("id"); 
         t.nonNull.string("description");
         t.nonNull.string("url");
+        t.nonNull.float("dateCreated");
+        t.nonNull.float("timeCreated");
     },
 });
-
 
 export const LinkQuery = extendType({
     type: "Query",
@@ -34,12 +35,12 @@ export const LinkMutation = extendType({
                 url: nonNull(stringArg()),
             },
 
-            validate: async (root, args) => {
+            validate: async (root: any, args: LinkInput) => {
                 await validateLinkInput(args);
             },
-            
-            resolve(parent, args, context) {
-                const { description, url } = args;  // 4
+
+            resolve(parent, args: LinkInput, context) {
+                const { description, url } = args;
 
                 return createLink(description, url);
             },
