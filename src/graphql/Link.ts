@@ -1,5 +1,5 @@
 import { extendType, nonNull, objectType, stringArg } from "nexus";
-import { createLink, getLinks } from "../services/linkService";
+import { createLink, exists, getLinks } from "../services/linkService";
 import { validateLinkInput, LinkInput } from "../services/linkValidationService";
 
 export const Link = objectType({
@@ -38,10 +38,10 @@ export const LinkMutation = extendType({
             validate: async (root: any, args: LinkInput) => {
                 await validateLinkInput(args);
             },
-
+            
             resolve(parent, args: LinkInput, context) {
-                const { description, url } = args;
-
+                const { description, url } = args;  // 4
+                exists(url);
                 return createLink(description, url);
             },
         });
