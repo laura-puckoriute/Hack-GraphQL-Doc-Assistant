@@ -25,3 +25,8 @@ Tested:
 Extend:
 - apply to other apis or schemas
 - hydration (if you don't provide something, then server populates the field itself) - update documentation/code to ensure hydration is happening or is documented clearly
+
+Think of:
+Risks
+Money
+Time

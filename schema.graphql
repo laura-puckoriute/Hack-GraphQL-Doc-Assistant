@@ -5,7 +5,7 @@
 type Author {
   email: String!
   id: Int!
-  link: Link!
+  links: [Link!]!
   name: String!
 }
 
@@ -17,8 +17,13 @@ type Link {
   url: String!
 }
 
+input LinkCreateInput {
+  description: String!
+  url: String!
+}
+
 type Mutation {
-  createAuthor(email: String!, name: String!): Author!
+  createAuthor(email: String!, links: [LinkCreateInput!]!, name: String!): Author!
   post(description: String!, url: String!): Link!
 }
 

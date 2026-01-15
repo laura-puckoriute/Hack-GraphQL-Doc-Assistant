@@ -14,6 +14,10 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  LinkCreateInput: { // input type
+    description: string; // String!
+    url: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
@@ -31,7 +35,7 @@ export interface NexusGenObjects {
   Author: { // root type
     email: string; // String!
     id: number; // Int!
-    link: NexusGenRootTypes['Link']; // Link!
+    links: NexusGenRootTypes['Link'][]; // [Link!]!
     name: string; // String!
   }
   Link: { // root type
@@ -59,7 +63,7 @@ export interface NexusGenFieldTypes {
   Author: { // field return type
     email: string; // String!
     id: number; // Int!
-    link: NexusGenRootTypes['Link']; // Link!
+    links: NexusGenRootTypes['Link'][]; // [Link!]!
     name: string; // String!
   }
   Link: { // field return type
@@ -83,7 +87,7 @@ export interface NexusGenFieldTypeNames {
   Author: { // field return type name
     email: 'String'
     id: 'Int'
-    link: 'Link'
+    links: 'Link'
     name: 'String'
   }
   Link: { // field return type name
@@ -107,6 +111,7 @@ export interface NexusGenArgTypes {
   Mutation: {
     createAuthor: { // args
       email: string; // String!
+      links: NexusGenInputs['LinkCreateInput'][]; // [LinkCreateInput!]!
       name: string; // String!
     }
     post: { // args
@@ -124,7 +129,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = never;
 

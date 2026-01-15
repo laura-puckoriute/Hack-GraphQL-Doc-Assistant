@@ -1,6 +1,17 @@
-import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { arg, extendType, inputObjectType, list, nonNull, objectType, stringArg } from "nexus";
 import { getAuthors, createAuthor } from "../services/authorService";
-import { validateAuthorInput, AuthorInput } from "../services/validation/authorValidationService";
+import { validateAuthorInput } from "../services/validation/authorValidationService";
+import type { AuthorInput } from "../services/validation/authorValidationService";
+import { validateLinkInput } from "../services/validation/linkValidationService";
+import type { LinkInput } from "../services/validation/linkValidationService";
+
+export const LinkCreateInput = inputObjectType({
+    name: "LinkCreateInput",
+    definition(t) {
+        t.nonNull.string("description");
+        t.nonNull.string("url");
+    },
+});
 
 export const Author = objectType({
     name: "Author",
@@ -8,7 +19,7 @@ export const Author = objectType({
         t.nonNull.int("id");
         t.nonNull.string("name");
         t.nonNull.string("email");
-        t.nonNull.field("link", { type: "Link" });
+        t.nonNull.list.nonNull.field("links", { type: "Link" });
     },
 });
 
@@ -32,21 +43,15 @@ export const AuthorMutation = extendType({
             args: {
                 name: nonNull(stringArg()),
                 email: nonNull(stringArg()),
+                links: nonNull(list(nonNull(arg({ type: LinkCreateInput })))),
             },
-            validate: async (root: any, args: AuthorInput) => {
+            validate: async (root: any, args: AuthorInput & { links: LinkInput[] }) => {
                 await validateAuthorInput(args);
+                await Promise.all(args.links.map(link => validateLinkInput(link)));
             },
-            resolve(parent, args: AuthorInput, context) {
-                const { name, email } = args;
-                // Create a default link for the author
-                const defaultLink = {
-                    id: 0,
-                    url: "",
-                    description: "",
-                    dateCreated: Date.now(),
-                    timeCreated: Date.now(),
-                };
-                return createAuthor(name, email, defaultLink);
+            resolve(parent, args: AuthorInput & { links: LinkInput[] }, context) {
+                const { name, email, links } = args;
+                return createAuthor(name, email, links);
             },
         });
     },
