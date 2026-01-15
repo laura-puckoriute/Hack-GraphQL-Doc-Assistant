@@ -1,6 +1,6 @@
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 import { getAuthors, createAuthor } from "../services/authorService";
-import { validateAuthorInput, AuthorInput } from "../services/authorValidationService";
+import { validateAuthorInput, AuthorInput } from "../services/validation/authorValidationService";
 
 export const Author = objectType({
     name: "Author",
@@ -18,7 +18,6 @@ export const AuthorQuery = extendType({
         t.nonNull.list.nonNull.field("authors", {
             type: "Author",
             resolve(parent, args, context, info) {
-                // TODO: Implement getAuthors service
                 return getAuthors();
             },
         });

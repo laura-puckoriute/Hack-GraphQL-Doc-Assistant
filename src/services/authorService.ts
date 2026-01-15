@@ -2,7 +2,7 @@ import { NexusGenObjects } from "../../nexus-typegen";
 
 const authors: NexusGenObjects["Author"][] = [
     {
-        i: 1,
+        id: 1,
         name: "John Doe",
         email: "john@example.com",
         link: {
@@ -14,7 +14,7 @@ const authors: NexusGenObjects["Author"][] = [
         },
     },
     {
-        i: 2,
+        id: 2,
         name: "Jane Smith",
         email: "jane@example.com",
         link: {

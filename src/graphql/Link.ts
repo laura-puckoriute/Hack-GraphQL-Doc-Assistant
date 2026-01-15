@@ -1,6 +1,6 @@
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 import { createLink, exists, getLinks } from "../services/linkService";
-import { validateLinkInput, LinkInput } from "../services/linkValidationService";
+import { validateLinkInput, LinkInput } from "../services/validation/linkValidationService";
 
 export const Link = objectType({
     name: "Link",
