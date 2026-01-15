@@ -32,7 +32,7 @@ export function getAuthors(): NexusGenObjects["Author"][] {
 }
 
 export function getAuthor(id: number): NexusGenObjects["Author"] | undefined {
-    return authors.find(author => author.i === id);
+    return authors.find(author => author.id === id);
 }
 
 export function createAuthor(
